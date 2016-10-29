@@ -11,7 +11,7 @@ namespace Console_MySqlAccess
         static void Main(string[] args)
         {
             DatabaseAccess connect = new DatabaseAccess();
-            connect.connectToDatabase();
+            connect.TestConnectToDatabase();
         }
     }
 }
