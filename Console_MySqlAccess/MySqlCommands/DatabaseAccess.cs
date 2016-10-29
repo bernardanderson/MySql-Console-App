@@ -8,7 +8,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
 
-namespace Console_MySqlAccess
+namespace Console_MySqlAccess.MySqlCommands
 {
     class DatabaseAccess
     {
@@ -19,38 +19,45 @@ namespace Console_MySqlAccess
             "pwd=" + ServerPass.Password() + ";" +
             "database=hello_test;";
 
-        public void TestConnectToDatabase()
+        public List<NameObject> GetAllNamesFromDatabase()
         {
             MySqlConnection connection = new MySqlConnection(myConnectionString);
-
             MySqlCommand newCommand = connection.CreateCommand();
             newCommand.CommandText = "select * from testnames";
+
             connection.Open();
 
             MySqlDataReader reader = newCommand.ExecuteReader();
 
+            List<NameObject> listOfNames = new List<NameObject>();
+
             while (reader.Read())
             {
-                Console.WriteLine("Id: " + reader[0] + " // Name: " + reader[1] + " " + reader[2] + " //Age: " + reader[3]);
+                NameObject currentDatabaseRow = new NameObject(
+                    Convert.ToInt32(reader[0]), 
+                    reader[1].ToString(), 
+                    reader[2].ToString(), 
+                    Convert.ToInt32(reader[3]));
+
+                listOfNames.Add(currentDatabaseRow);
             }
             connection.Close();
 
-            Console.Read();
+            return listOfNames;
         }
-        public void WriteToDataBase()
+
+        public string WriteToDataBase(NameObject sentNewName)
         {
             MySqlConnection connection = new MySqlConnection(myConnectionString);
             MySqlCommand newCommand = connection.CreateCommand();
 
             newCommand = connection.CreateCommand();
-            newCommand.CommandText = "INSERT INTO testnames (first, last, age) VALUES ('Cordelia', 'Charter', 33)";
+            newCommand.CommandText = $"INSERT INTO testnames (first, last, age) VALUES ('{sentNewName.FirstName}', '{sentNewName.LastName}', {sentNewName.Age})";
             connection.Open();
             newCommand.ExecuteNonQuery();
             connection.Close();
 
-            Console.Read();
+            return "** New Name Added **";
         }
-
-
     }
 }
