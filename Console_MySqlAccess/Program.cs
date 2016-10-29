@@ -16,7 +16,7 @@ namespace Console_MySqlAccess
             while (true)
             {
                 Console.WriteLine("** MySql Server Access Via C# Console Example **");
-                Console.WriteLine("Enter a command:\n0. For Name List\n1. To Add A Name\nX. To Exit");
+                Console.WriteLine("Enter a command:\n0. For Name List\n1. To Add A Name\n2. To Delete A Name\nX. To Exit");
                 userChoice = Console.ReadLine();
                 if (userChoice == "X")
                 {

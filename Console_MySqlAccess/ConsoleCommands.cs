@@ -29,6 +29,9 @@ namespace Console_MySqlAccess
                 case '1':
                     return userDatabaseAccess.WriteToDataBase(GetNewName());
 
+                case '2':
+                    return userDatabaseAccess.DeleteNameRow(GetNameID());
+
                 default:
                     return "** Invalid Command Entered ** ";
 	        }
@@ -47,5 +50,13 @@ namespace Console_MySqlAccess
 
             return enteredNameObject;
         }
+        public int GetNameID()
+        {
+            Console.Write("Enter a NameID to Delete: ");
+            int nameID = Convert.ToInt32(Console.ReadLine());
+
+            return nameID;
+        }
+
     }
 }

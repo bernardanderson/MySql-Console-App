@@ -59,5 +59,20 @@ namespace Console_MySqlAccess.MySqlCommands
 
             return "** New Name Added **";
         }
+
+        public string DeleteNameRow(int sentNameIDToDelete)
+        {
+            MySqlConnection connection = new MySqlConnection(myConnectionString);
+            MySqlCommand newCommand = connection.CreateCommand();
+
+            newCommand = connection.CreateCommand();
+            newCommand.CommandText = $"DELETE FROM testnames WHERE id = {sentNameIDToDelete}";
+            connection.Open();
+            newCommand.ExecuteNonQuery();
+            connection.Close();
+
+            return $"** Name with ID of {sentNameIDToDelete} Deleted **";
+        }
+
     }
 }
